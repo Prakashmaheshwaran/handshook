@@ -1,30 +1,67 @@
-# handshook
-## Introduction
-Handshook is a Handshake applicator. It automatically applies to easy jobs on Handshake, i.e. jobs that require only resume or cover letter or transcript.
+# Handshook - Handshake Job Application Bot
 
-## Dependencies
-The script uses `requests` library.
+A Python bot that automatically applies to jobs on Handshake. It works with both saved HTML job searches and live API queries.
 
-## Usage
-You need to provides this program three things:
-* Your jobs search string
-* Your cookies
-* Your resume ID, cover letter ID, and transcript ID
+## What It Does
 
-You can obtain the job search string by just search normally for jobs, and copy the search url string. Please sort the jobs by "Date Posted"! The link looks like
-```
-https://berkeley.joinhandshake.com/postings?page=1&per_page=25&sort_direction=desc&sort_column=created_at&job.student_screen.disable_majors=true&job.student_screen.disable_school_years=true&job.student_screen.disable_graduation_date=true&job.student_screen.disable_work_auth=true&job.student_screen.disable_gpa=true&job.job_types%5B%5D=3&job.salary_types%5B%5D=1&qualified_only=false&majors%5B%5D=14484&majors%5B%5D=28
-```
+1. **Finds Jobs**: Either from HTML files you save or by searching Handshake directly
+2. **Filters Jobs**: Uses your keywords to find relevant positions
+3. **Applies Automatically**: Submits applications with your resume, cover letter, and transcript
+4. **Tracks Progress**: Saves applied jobs to avoid duplicates
 
-For cookies, follow the example in `conf.json`, copy the names and values from the domain `.joinhandshake.com` to that file. If you use Firefox, login to Handshake and go to developer mode by pressing <kbd>F12</kbd> or just by right clicking somewhere on the page and choose "Inspect Element". Then go to "Storage" tab, click on https://berkeley.joinhandshake.com and copy the cookies from there.
-The reason I use cookies is because I don't have access to neither the CalCentral Login API nor Handshake API.
+## Quick Setup
 
-To get the resume ID, cover letter ID, and transcript ID go to those documents and copy the number after `documents#`. The link looks like
-```
-https://berkeley.joinhandshake.com/users/12345678/documents#12345678
+### 1. Install Dependencies
+```bash
+pip3 install requests
 ```
 
-Finally put those things in `config.json` and set `valid` to `true`. Run the script and enjoy!
+### 2. Configure Your Settings
 
-## Note
-Let me know if anything goes wrong!
+Copy `conf_template.json` to `conf.json` and fill in:
+
+- **Document IDs**: Get from Handshake → Documents → Click each document → Copy ID from URL
+- **Cookies**: Press F12 → Storage/Application tab → Copy cookies from `.joinhandshake.com`
+- **Keywords**: Add job titles you want (optional)
+
+### 3. Run the Bot
+```bash
+python3 handshake.py
+```
+
+## Two Ways to Use
+
+### Option 1: Save HTML Jobs (Recommended for Specific Jobs)
+1. Go to Handshake job search
+2. Right-click → "Save Page As" → Save to `html/` folder
+3. Run `python3 handshake.py`
+4. Bot automatically extracts and applies to those jobs
+
+### Option 2: Automatic Search (Bulk Applications)
+1. Just run `python3 handshake.py`
+2. Bot searches Handshake using your keyword filters
+3. Applies to matching jobs automatically
+
+## Files
+
+- `conf.json` - Your personal configuration (cookies, document IDs, keywords)
+- `conf_template.json` - Example configuration file
+- `jobs.csv` - History of all applied jobs
+- `new_jobs.csv` - Jobs extracted from HTML (auto-generated, auto-cleaned)
+- `wait.json` - Jobs not yet open (will retry later)
+- `html/` - Folder for saved HTML files (auto-cleaned after processing)
+
+## Important Notes
+
+- **Cookies expire** every few days - update them when you see authentication errors
+- Only applies to jobs requiring resume, cover letter, or transcript
+- Skips external application jobs automatically
+- Run regularly to catch new postings (or set up a cron job)
+
+## Troubleshooting
+
+- **"Cookies not valid"** → Update cookies in `conf.json`
+- **403 errors** → Normal, means you don't qualify for that job
+- **No jobs applied** → Check your document IDs are correct
+
+Happy job hunting! 🎯

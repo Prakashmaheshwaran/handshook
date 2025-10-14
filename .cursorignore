@@ -1,0 +1,15 @@
+# Cursor can access these files, but they're in gitignore
+# This file excludes only what we don't want Cursor to see
+
+# Generated data files
+jobs.csv
+new_jobs_processed_*.csv
+
+
+# Python cache
+__pycache__/
+*.pyc
+
+# Logs
+*.log
+

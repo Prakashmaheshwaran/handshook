@@ -1,0 +1,38 @@
+# Configuration with sensitive data
+conf.json
+
+# Generated/temporary files
+jobs.csv
+new_jobs.csv
+new_jobs_processed_*.csv
+wait.json
+
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+
+# Virtual environments
+venv/
+env/
+ENV/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+
+#confi files
+conf.json

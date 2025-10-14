@@ -1,0 +1,30 @@
+{
+  "valid": true,
+  "url": "https://app.joinhandshake.com/job-search/YOUR_SEARCH_ID",
+  "resume": 12345678,
+  "cover": 12345679,
+  "transcript": 12345680,
+  "date": "0",
+  "job_keywords": [
+    "data analyst",
+    "data engineer",
+    "business analyst",
+    "analytics",
+    "data science"
+  ],
+  "skip_keywords": [
+    "physical therapist",
+    "medical",
+    "clinical",
+    "nurse"
+  ],
+  "cookies": {
+    "_trajectory_session": "YOUR_SESSION_COOKIE_HERE",
+    "production_current_user": "YOUR_USER_ID",
+    "hss-global": "YOUR_HSS_GLOBAL_COOKIE",
+    "ajs_user_id": "YOUR_USER_ID",
+    "_ga": "YOUR_GA_COOKIE",
+    "__cf_bm": "YOUR_CLOUDFLARE_COOKIE"
+  }
+}
+
