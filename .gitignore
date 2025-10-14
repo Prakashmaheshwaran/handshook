@@ -36,3 +36,9 @@ Thumbs.db
 
 #confi files
 conf.json
+
+#html files
+html/
+
+#csv files
+*.csv

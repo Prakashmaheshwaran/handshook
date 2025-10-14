@@ -7,36 +7,60 @@ import os
 import re
 import csv
 from pathlib import Path
+from bs4 import BeautifulSoup
 
 def extract_job_ids_from_html(html_content):
     """
     Extract all job IDs from Handshake HTML content.
-    Looks for patterns like /jobs/12345 in URLs.
+    Job IDs are 8-digit numbers in URLs like: job-search/10410427?
     """
     job_ids = set()
     
-    # Pattern 1: Direct job URLs like href="/jobs/12345" or href="https://app.joinhandshake.com/jobs/12345"
-    pattern1 = r'/jobs/(\d+)'
-    matches1 = re.findall(pattern1, html_content)
-    job_ids.update(matches1)
+    # Primary pattern: job-search/XXXXXXXX (8 digits)
+    # This matches: /job-search/10410427? or /job-search/10410427 or job-search/10410427
+    pattern = r'job-search/(\d{8})'
     
-    # Pattern 2: Data attributes that might contain job IDs
-    pattern2 = r'data-job-id="(\d+)"'
-    matches2 = re.findall(pattern2, html_content)
-    job_ids.update(matches2)
+    try:
+        # Method 1: Use BeautifulSoup to find the Jobs List region first
+        soup = BeautifulSoup(html_content, 'html.parser')
+        
+        jobs_list_region = soup.find('div', attrs={'data-hook': 'left-content', 'role': 'region', 'aria-label': 'Jobs List'})
+        
+        if jobs_list_region:
+            # Extract from Jobs List region only (most accurate)
+            region_html = str(jobs_list_region)
+            matches = re.findall(pattern, region_html)
+            job_ids.update(matches)
+            print(f"   📍 Found {len(matches)} job IDs in Jobs List region")
+        
+        # Method 2: Extract from entire HTML (fallback)
+        if not job_ids:
+            print(f"   📍 Jobs List region not found, searching entire HTML")
+            matches = re.findall(pattern, html_content)
+            job_ids.update(matches)
+        
+        # Method 3: Also look for any links with job-search pattern
+        all_links = soup.find_all('a', href=re.compile(r'job-search/\d{8}'))
+        for link in all_links:
+            href = link.get('href', '')
+            match = re.search(pattern, href)
+            if match:
+                job_ids.add(match.group(1))
     
-    # Pattern 3: Job IDs in JavaScript/JSON data
-    pattern3 = r'"job_id["\s:]+(\d+)'
-    matches3 = re.findall(pattern3, html_content)
-    job_ids.update(matches3)
+    except Exception as e:
+        print(f"   ⚠️  Error parsing with BeautifulSoup: {e}")
+        # Fallback to simple regex if BeautifulSoup fails
+        print(f"   📍 Using regex fallback on entire HTML")
+        matches = re.findall(pattern, html_content)
+        job_ids.update(matches)
     
-    # Pattern 4: ID fields in JSON
-    pattern4 = r'"id"\s*:\s*(\d+)'
-    matches4 = re.findall(pattern4, html_content)
-    # Filter to only IDs that look like job IDs (7-9 digits typically)
-    job_ids.update([m for m in matches4 if len(m) >= 6 and len(m) <= 10])
+    # Remove duplicates and sort (convert to int then back to ensure 8 digits)
+    unique_ids = sorted(list(set(job_ids)))
     
-    return sorted([int(job_id) for job_id in job_ids])
+    # Filter to ensure only 8-digit numbers
+    valid_ids = [job_id for job_id in unique_ids if len(job_id) == 8 and job_id.isdigit()]
+    
+    return [int(job_id) for job_id in valid_ids]
 
 
 def process_html_folder(html_folder='html'):
