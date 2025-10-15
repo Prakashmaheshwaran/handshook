@@ -31,8 +31,9 @@ Thumbs.db
 # Logs
 *.log
 
-#html folder contents (but keep empty folder tracked)
+#html folder contents (but keep .gitkeep for empty folder tracking)
 html/*
+!html/.gitkeep
 
 #csv files
 *.csv
