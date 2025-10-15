@@ -496,7 +496,6 @@ def main():
     date = datetime.datetime.utcnow().isoformat()
     
     jobs_checked = 0
-    jobs_skipped_keywords = 0
     jobs_applied = 0
     
     # Clean up old new_jobs.csv before processing fresh data from HTML
@@ -562,25 +561,12 @@ def main():
                 print(f"⚠️  Could not delete {NEW_JOBS_FILE}: {e}")
     
     else:
-        # Original bulk processing with keyword filtering
+        # Original bulk processing
         print("="*70)
-        print(f"📊 No {NEW_JOBS_FILE} found - using bulk processing with keyword filters")
+        print(f"📊 No {NEW_JOBS_FILE} found - using bulk processing")
         print("="*70)
         print()
         
-        # Get keyword filters for client-side filtering
-        job_keywords = [kw.lower() for kw in configs.get("job_keywords", [])]
-        skip_keywords = [kw.lower() for kw in configs.get("skip_keywords", [])]
-        
-        if job_keywords or skip_keywords:
-            print(f"✅ Using client-side keyword filtering:")
-            if job_keywords:
-                print(f"   Include keywords: {', '.join(job_keywords[:5])}{'...' if len(job_keywords) > 5 else ''}")
-            if skip_keywords:
-                print(f"   Exclude keywords: {', '.join(skip_keywords[:5])}{'...' if len(skip_keywords) > 5 else ''}")
-        else:
-            print(f"⚠️  No keyword filters - will process ALL jobs")
-        print()
     
     while not cookie_error and not see_old_jobs and not specific_job_ids:
         # Use /stu/postings API (the actual REST endpoint that returns JSON)
@@ -608,17 +594,6 @@ def main():
             
         for job_data in jobs["results"]:
             jobs_checked += 1
-            job_name_lower = job_data.get("job_name", "").lower()
-            
-            # Apply keyword filtering
-            if skip_keywords and any(skip in job_name_lower for skip in skip_keywords):
-                jobs_skipped_keywords += 1
-                continue
-            
-            if job_keywords and not any(keyword in job_name_lower for keyword in job_keywords):
-                jobs_skipped_keywords += 1
-                continue
-            
             job = Job(job_data)
             if configs["date"] > job.date:
                 see_old_jobs = True
@@ -651,8 +626,6 @@ def main():
             print("\n" + "="*60)
             print("✅ Run completed successfully!")
             print(f"📊 Jobs checked: {jobs_checked}")
-            if configs.get("job_keywords") or configs.get("skip_keywords"):
-                print(f"🔍 Jobs skipped (keyword filter): {jobs_skipped_keywords}")
             print(f"✅ Jobs applied to: {jobs_applied}")
             print(f"📝 Check {JOBS_FILE} for details")
             print("="*60)
