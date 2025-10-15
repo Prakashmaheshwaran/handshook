@@ -1,6 +1,3 @@
-# Configuration with sensitive data
-conf.json
-
 # Generated/temporary files
 jobs.csv
 new_jobs.csv
@@ -33,9 +30,6 @@ Thumbs.db
 
 # Logs
 *.log
-
-#confi files
-conf.json
 
 #html files
 html/

@@ -1,6 +1,9 @@
 # Cursor can access these files, but they're in gitignore
 # This file excludes only what we don't want Cursor to see
 
+# Sensitive configuration file - Cursor should not access
+conf.py
+
 # Generated data files
 jobs.csv
 new_jobs_processed_*.csv
