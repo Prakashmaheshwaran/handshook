@@ -36,3 +36,5 @@ html/
 
 #csv files
 *.csv
+
+conf.py

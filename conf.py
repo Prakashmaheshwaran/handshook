@@ -9,7 +9,15 @@ VALID = True
 URL = 'https://app.joinhandshake.com/job-search/10382339?employmentTypes=1&jobType=9&pay%5BsalaryType%5D=1&majors=35471&qualifications=majors&jobRoleGroups=64&workAuthorization=openToUSVisaSponsorship&workAuthorization=openToOptionalPracticalTraining&per_'
 
 # Document IDs for application
+#Data Analyst Resume
 RESUME = 61560036
+
+#AI/ML Resume
+# RESUME = 61560072
+
+#SDE Resume
+# RESUME = 61560055
+
 COVER = 61560812
 TRANSCRIPT = 52936640
 OTHER = None
