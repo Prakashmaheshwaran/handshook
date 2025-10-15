@@ -9,14 +9,18 @@ VALID = True
 URL = 'https://app.joinhandshake.com/job-search/10382339?employmentTypes=1&jobType=9&pay%5BsalaryType%5D=1&majors=35471&qualifications=majors&jobRoleGroups=64&workAuthorization=openToUSVisaSponsorship&workAuthorization=openToOptionalPracticalTraining&per_'
 
 # Document IDs for application
-#Data Analyst Resume
-RESUME = 61560036
+# Data Analyst Resume
+# https://app.joinhandshake.com/job-search/10410522?pay%5BsalaryType%5D=1&majors=35471&qualifications=majors&jobRoleGroups=72&jobRoleGroups=67&jobRoleGroups=36&jobRoleGroups=73&jobRoleGroups=392&jobRoleGroups=55&jobRoleGroups=65&jobRoleGroups=56&workAuthorization=openToUSVisaSponsorship&workAuthorization=openToOptionalPracticalTraining&per_page=50&employmentTypes=1&jobType=9&sort=posted_date_desc&page=1
+# RESUME = 61560036
 
-#AI/ML Resume
+# AI/ML Resume
+# https://app.joinhandshake.com/job-search/10399838?query=AI&pay%5BsalaryType%5D=1&majors=35471&qualifications=majors&workAuthorization=openToUSVisaSponsorship&workAuthorization=openToOptionalPracticalTraining&per_page=50&employmentTypes=1&jobType=9&sort=posted_date_desc&page=1
+# https://app.joinhandshake.com/job-search/10410517?query=machine+learning&pay%5BsalaryType%5D=1&majors=35471&qualifications=majors&workAuthorization=openToUSVisaSponsorship&workAuthorization=openToOptionalPracticalTraining&per_page=50&employmentTypes=1&jobType=9&sort=posted_date_desc&page=1
 # RESUME = 61560072
 
-#SDE Resume
-# RESUME = 61560055
+# SDE Resume
+# https://app.joinhandshake.com/job-search/10390237?pay%5BsalaryType%5D=1&majors=35471&qualifications=majors&jobRoleGroups=64&jobRoleGroups=66&jobRoleGroups=65&jobRoleGroups=487&jobRoleGroups=57&jobRoleGroups=8&jobRoleGroups=397&jobRoleGroups=396&jobRoleGroups=60&jobRoleGroups=59&jobRoleGroups=58&jobRoleGroups=63&jobRoleGroups=55&workAuthorization=openToUSVisaSponsorship&workAuthorization=openToOptionalPracticalTraining&per_page=50&employmentTypes=1&jobType=9&sort=posted_date_desc&page=1
+RESUME = 61560055
 
 COVER = 61560812
 TRANSCRIPT = 52936640
