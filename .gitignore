@@ -31,8 +31,8 @@ Thumbs.db
 # Logs
 *.log
 
-#html files
-html/
+#html folder contents (but keep empty folder tracked)
+html/*
 
 #csv files
 *.csv
